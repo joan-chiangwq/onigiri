@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Onigiri: keep your Mac awake</title>
+<meta name="description" content="Onigiri is a tiny macOS menu bar app that keeps your Mac awake. One click to caffeinate, one click to snooze.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍙</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&family=Roboto+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --text: #000;
+    --muted: #7b7b7b;
+    --card: #f5f5f5;
+    --placeholder: #d9d9d9;
+    --divider: #e6e6e6;
+    --button: #454545;
+    --sf: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+    --inter: "Inter", var(--sf);
+    --mono: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --gutter: 80px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: #fff; color: var(--text); font-family: var(--sf); -webkit-font-smoothing: antialiased; }
+  a { color: inherit; }
+  .wrap { max-width: 1440px; margin: 0 auto; padding-inline: var(--gutter); }
+
+  /* Navigation */
+  nav { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-block: 56px 26px; }
+  .site-name { font-size: 20px; font-weight: 400; letter-spacing: -0.4px; text-decoration: none; }
+  .nav-items { --nav-gap: 48px; display: flex; align-items: center; gap: var(--nav-gap); font-family: var(--inter); font-weight: 500; }
+  .nav-items a { font-size: 20px; line-height: 1.5; text-decoration: none; }
+  .nav-items .dot { position: relative; }
+  .nav-items .dot::after { content: "·"; position: absolute; right: calc(var(--nav-gap) / -2); transform: translateX(50%); pointer-events: none; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; border-radius: 8px; text-decoration: none; color: #fff; filter: drop-shadow(0 1px 1px rgba(0,0,0,.05)); }
+  .nav-items .btn { background: #000; font-size: 16px; padding: 14px 24px; }
+  .btn:hover { opacity: .85; }
+
+  /* Hero */
+  h1 { font-size: 64px; font-weight: 700; letter-spacing: -1.28px; margin: 0 0 58px; }
+  h2 { font-size: 48px; font-weight: 700; letter-spacing: -0.96px; margin: 0 0 46px; }
+  h3 { font-size: 36px; font-weight: 590; letter-spacing: -0.72px; margin: 0; }
+  .perfect ul { margin: 14px 0 0; padding-left: 39px; font-size: 26px; line-height: 31px; letter-spacing: -0.52px; }
+  .tagline { font-size: 24px; font-weight: 510; letter-spacing: -0.48px; margin: 46px 0 44px; }
+  .video { background: var(--placeholder); aspect-ratio: 1280 / 555; display: grid; place-items: center; }
+  .video span { font-size: 36px; font-weight: 590; letter-spacing: -0.72px; }
+  .about { font-size: 26px; font-weight: 400; letter-spacing: -0.52px; margin: 33px 0 0; }
+
+  /* Installation */
+  #install { padding-top: 93px; scroll-margin-top: 16px; }
+  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
+  .card { background: var(--card); border-radius: 20px; padding: 39px 36px 40px; display: flex; flex-direction: column; }
+  .card h3 { align-self: center; background: var(--placeholder); border-radius: 10px; padding: 8px 28px; font-size: 26px; letter-spacing: -0.52px; margin-bottom: 18px; }
+  .card ol { flex: 1; display: flex; flex-direction: column; justify-content: space-between; gap: 14px; margin: 16px 0 0; padding-left: 30px; font-size: 20px; line-height: 35px; letter-spacing: -0.4px; }
+  .card li b { font-weight: 700; }
+  .cmd { display: flex; align-items: flex-start; gap: 8px; margin: 4px 0 6px; background: #fff; border-radius: 8px; padding: 8px 8px 8px 14px; }
+  .cmd code { flex: 1; font-family: var(--mono); font-size: 16px; line-height: 26px; letter-spacing: 0; overflow-wrap: anywhere; }
+  .copy { flex: none; font: 500 13px/1 var(--inter); border: 1px solid var(--divider); background: #fff; border-radius: 6px; padding: 6px 10px; cursor: pointer; color: #000; }
+  .copy:hover { background: var(--card); }
+  .download { align-self: center; margin-top: auto; background: var(--button); font-size: 24px; font-weight: 510; line-height: 1.5; padding: 12px 24px; }
+  .card .download { margin-top: 35px; }
+  .dock-note { font-size: 22px; line-height: 33px; font-weight: 400; letter-spacing: -0.44px; margin: 12px 0 0; }
+  .dock-note.look-up { margin-top: 41px; }
+
+  /* FAQ */
+  #faq { padding-top: 93px; scroll-margin-top: 16px; }
+  #faq h2 { margin-bottom: 48px; }
+  .qa { margin: 0 0 36px; }
+  .qa h4 { font-size: 26px; font-weight: 590; letter-spacing: -0.52px; margin: 0 0 15px; }
+  .qa p { font-size: 26px; line-height: 33px; letter-spacing: -0.52px; margin: 0; }
+
+  /* Footer */
+  footer { margin-top: 28px; border-top: 1px solid var(--divider); padding-block: 40px 48px; }
+  footer p { font-size: 20px; font-weight: 400; line-height: 32px; letter-spacing: -0.4px; margin: 0; }
+  footer .social { margin: 0 0 16px -11px; }
+  .social { display: inline-grid; place-items: center; width: 40px; height: 40px; border-radius: 4px; }
+  .social:hover { background: var(--card); }
+  .social img { display: block; }
+
+  @media (max-width: 1000px) {
+    :root { --gutter: 32px; }
+    .cards { grid-template-columns: 1fr; gap: 32px; }
+  }
+  @media (max-width: 640px) {
+    :root { --gutter: 18px; }
+    nav { padding-block: 24px 16px; flex-wrap: wrap; }
+    .nav-items { --nav-gap: 24px; }
+    .nav-items a { font-size: 16px; }
+    .nav-items .btn { font-size: 14px; padding: 10px 16px; }
+    .site-name { font-size: 17px; }
+    h1 { font-size: 44px; margin-bottom: 36px; }
+    h2 { font-size: 36px; margin-bottom: 28px; }
+    h3 { font-size: 28px; }
+    .perfect ul, .about, .qa h4, .qa p { font-size: 19px; line-height: 27px; }
+    .dock-note { font-size: 17px; line-height: 28px; }
+    .perfect ul { padding-left: 24px; }
+    .tagline { font-size: 20px; }
+    .video { aspect-ratio: 16 / 10; }
+    .video span { font-size: 22px; }
+    .card { padding: 28px 20px; }
+    .card ol { font-size: 17px; line-height: 28px; }
+    .card ol { padding-left: 22px; }
+    .cmd code { font-size: 14px; line-height: 22px; }
+    .download { font-size: 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <a class="site-name" href="#">Stay awake. Use Onigiri.</a>
+    <div class="nav-items">
+      <a class="dot" href="#about">About Onigiri</a>
+      <a href="#faq">FAQ</a>
+      <a class="btn" href="#install">Install Now</a>
+    </div>
+  </nav>
+
+  <main>
+    <h1>Meet Onigiri 🍙</h1>
+
+    <section class="perfect">
+      <h3>Perfect for</h3>
+      <ul>
+        <li>Developers running long builds, tests or downloads</li>
+        <li>Creatives waiting for exports and renders</li>
+        <li>Presenters who can’t have their screen dim mid-talk</li>
+        <li>Anyone who just wants their Mac to stay awake without fiddling aimlessly with System Settings</li>
+      </ul>
+    </section>
+
+    <p class="tagline">One-click to caffeinate, one-click to snooze.</p>
+
+    <div class="video" role="img" aria-label="Video coming soon"><span>Placeholder for Video</span></div>
+
+    <p class="about" id="about">Onigiri is the smallest possible macOS utility tool for keeping a Mac awake. It lives quietly in the menu bar as a tiny rice ball. When you need your Mac to stay awake, feed it a coffee. When you’re done, let it nap.</p>
+
+    <section id="install">
+      <h2>Installation via</h2>
+      <div class="cards">
+        <div class="card">
+          <h3>Homebrew</h3>
+          <ol>
+            <li><b>Open Terminal.</b></li>
+            <li><b>Add the Onigiri catalog.</b> Paste this into your Terminal:
+              <div class="cmd"><code>brew tap joan-chiangwq/onigiri https://github.com/joan-chiangwq/onigiri</code><button class="copy" type="button">Copy</button></div></li>
+            <li><b>Trust the catalog.</b> Homebrew asks you to confirm catalogs from outside Homebrew. Paste this:
+              <div class="cmd"><code>brew trust joan-chiangwq/onigiri</code><button class="copy" type="button">Copy</button></div></li>
+            <li><b>Install Onigiri.</b> Paste this into your Terminal:
+              <div class="cmd"><code>brew install --cask onigiri</code><button class="copy" type="button">Copy</button></div></li>
+            <li><b>Open Onigiri.</b> Find it in your Applications folder.</li>
+          </ol>
+        </div>
+
+        <div class="card">
+          <h3>Direct Release</h3>
+          <ol>
+            <li><b>Download</b> the installer with the button below.</li>
+            <li><b>Open the downloaded file (<span id="dmg-name">Onigiri.dmg</span>)</b> from your Downloads folder.</li>
+            <li><b>Drag the Onigiri icon onto the Applications folder</b> in the window that opens.</li>
+            <li><b>Open Onigiri</b> from your Applications folder. If your Mac asks "Are you sure you want to open it?", click Open. Onigiri is signed and checked by Apple. This is just a first-time prompt.</li>
+          </ol>
+          <a class="btn download" id="download" href="https://github.com/joan-chiangwq/onigiri/releases/latest">Download 🍙</a>
+        </div>
+      </div>
+      <p class="dock-note look-up">Look up! A 🍙 appears in your menu bar, at the top right of your screen. Click it and flip the switch to keep your Mac awake.</p>
+      <p class="dock-note">Don’t see it in your Dock? That’s normal. Onigiri lives only in your menu bar.</p>
+    </section>
+
+    <section id="faq">
+      <h2>FAQ</h2>
+      <div class="qa">
+        <h4>Why did you build this?</h4>
+        <p>I kept forgetting to keep my Mac awake during downloads, presentations, and long-running tasks. Every app I found was full of switches, menus, and settings. So I built one that lives quietly in the menu bar as a tiny rice ball. Click once when you need it. Click again when you don't.</p>
+      </div>
+      <div class="qa">
+        <h4>Does it use lots of battery?</h4>
+        <p>No. Onigiri itself uses almost no power. Keeping your screen on does use some battery, so let it nap when you’re done.</p>
+      </div>
+      <div class="qa">
+        <h4>Does it collect data?</h4>
+        <p>No, we do not collect any data at all. Onigiri doesn’t change any of your settings. It only asks macOS to stay awake while it’s on. Once a day it checks for updates, which sends no personal information.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <a class="social" href="https://github.com/joan-chiangwq/onigiri" aria-label="Onigiri on GitHub"><img src="assets/github.svg" alt=""></a>
+    <p>Onigiri.<br>The Ultimate Sustenance for Your Mac.</p>
+  </footer>
+</div>
+<script>
+  // Point the Download button straight at the newest DMG. If GitHub can't be
+  // reached, the button keeps its fallback link to the latest release page.
+  fetch('https://api.github.com/repos/joan-chiangwq/onigiri/releases/latest')
+    .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+    .then(function (rel) {
+      var dmg = (rel.assets || []).find(function (a) { return /\.dmg$/i.test(a.name); });
+      if (!dmg) return;
+      document.getElementById('download').href = dmg.browser_download_url;
+      document.getElementById('dmg-name').textContent = dmg.name;
+    })
+    .catch(function () {});
+  document.querySelectorAll('.copy').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var text = b.previousElementSibling.textContent;
+      var done = function () { b.textContent = 'Copied'; setTimeout(function () { b.textContent = 'Copy'; }, 1500); };
+      if (navigator.clipboard) { navigator.clipboard.writeText(text).then(done, function () {}); }
+    });
+  });
+</script>
+</body>
+</html>

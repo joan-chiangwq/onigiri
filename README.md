@@ -2,7 +2,9 @@
 
 Onigiri is a tiny menu bar app that keeps your Mac awake. One icon, one switch.
 
-This repository holds the finished downloads only. The source code is not here.
+Website: https://joan-chiangwq.github.io/onigiri/
+
+This repository holds the finished downloads and the website (`docs/`). The app's source code is not here.
 
 ## Install
 
