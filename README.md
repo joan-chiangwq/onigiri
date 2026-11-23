@@ -6,10 +6,11 @@ This repository holds the finished downloads only. The source code is not here.
 
 ## Install
 
-**Homebrew** (two commands):
+**Homebrew** (three commands):
 
 ```
 brew tap joan-chiangwq/onigiri https://github.com/joan-chiangwq/onigiri
+brew trust joan-chiangwq/onigiri
 brew install --cask onigiri
 ```
 
