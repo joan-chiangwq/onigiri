@@ -6,7 +6,7 @@ Onigiri is the smallest possible macOS utility for keeping a Mac awake. It lives
 quietly in the menu bar as a tiny rice ball. When you need your Mac to stay
 awake, feed it a coffee. When you're done, let it nap.
 
-🌐 **Website:** https://joan-chiangwq.github.io/onigiri/
+🖥️ **Website:** https://joan-chiangwq.github.io/onigiri/
 
 ## Perfect for
 
