@@ -24,7 +24,7 @@
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
-  body { margin: 0; background: #fff; color: var(--text); font-family: var(--sf); -webkit-font-smoothing: antialiased; }
+  body { zoom: 0.9; margin: 0; background: #fff; color: var(--text); font-family: var(--sf); -webkit-font-smoothing: antialiased; }
   a { color: inherit; }
   .wrap { max-width: 1440px; margin: 0 auto; padding-inline: var(--gutter); }
 
@@ -45,8 +45,7 @@
   h3 { font-size: 36px; font-weight: 590; letter-spacing: -0.72px; margin: 0; }
   .perfect ul { margin: 14px 0 0; padding-left: 39px; font-size: 26px; line-height: 31px; letter-spacing: -0.52px; }
   .tagline { font-size: 24px; font-weight: 510; letter-spacing: -0.48px; margin: 46px 0 44px; }
-  .video { background: var(--placeholder); aspect-ratio: 1280 / 555; display: grid; place-items: center; }
-  .video span { font-size: 36px; font-weight: 590; letter-spacing: -0.72px; }
+  .video { display: block; width: 100%; height: auto; aspect-ratio: 1280 / 866; background: var(--placeholder); border-radius: 20px; }
   .about { font-size: 26px; font-weight: 400; letter-spacing: -0.52px; margin: 33px 0 0; }
 
   /* Installation */
@@ -98,8 +97,7 @@
     .dock-note { font-size: 17px; line-height: 28px; }
     .perfect ul { padding-left: 24px; }
     .tagline { font-size: 20px; }
-    .video { aspect-ratio: 16 / 10; }
-    .video span { font-size: 22px; }
+    .video { border-radius: 12px; }
     .card { padding: 28px 20px; }
     .card ol { font-size: 17px; line-height: 28px; }
     .card ol { padding-left: 22px; }
@@ -134,7 +132,7 @@
 
     <p class="tagline">One-click to caffeinate, one-click to snooze.</p>
 
-    <div class="video" role="img" aria-label="Video coming soon"><span>Placeholder for Video</span></div>
+    <video class="video" src="assets/onigiri-demo.mp4" poster="assets/onigiri-demo-poster.jpg" autoplay muted loop playsinline controls preload="metadata" aria-label="Onigiri in the Mac menu bar: one click to keep the Mac awake, one click to let it sleep"></video>
 
     <p class="about" id="about">Onigiri is the smallest possible macOS utility tool for keeping a Mac awake. It lives quietly in the menu bar as a tiny rice ball. When you need your Mac to stay awake, feed it a coffee. When you’re done, let it nap.</p>
 
