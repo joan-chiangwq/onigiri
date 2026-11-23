@@ -1,0 +1,23 @@
+<?xml version="1.0" standalone="yes"?>
+<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
+    <channel>
+        <title>Onigiri</title>
+        <item>
+            <title>3.0.1</title>
+            <pubDate>Tue, 24 Nov 2026 01:14:08 +0800</pubDate>
+            <sparkle:version>3.0.1</sparkle:version>
+            <sparkle:shortVersionString>3.0.1</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>11.0</sparkle:minimumSystemVersion>
+            <description><![CDATA[<h2>Onigiri 3.0.1</h2>
+<p>Onigiri now has one home. Downloads, updates and the Homebrew install all live in one place: <a href="https://github.com/joan-chiangwq/onigiri"><b>github.com/joan-chiangwq/onigiri</b></a></p>
+<ul>
+<li><b>Installed with Homebrew?</b> Paste this into Terminal once. It reinstalls Onigiri from the new home. Your settings are kept.
+<pre><code>brew update && brew untap --force joan-chiangwq/onigiri && brew tap joan-chiangwq/onigiri https://github.com/joan-chiangwq/onigiri && brew trust joan-chiangwq/onigiri && brew install --cask onigiri</code></pre>
+After that, <code>brew upgrade --cask onigiri</code> works as usual.</li>
+<li><b>Downloaded Onigiri directly?</b> You're all set. This update moves you over automatically.</li>
+</ul>
+]]></description>
+            <enclosure url="https://github.com/joan-chiangwq/onigiri/releases/download/v3.0.1/Onigiri-3.0.1.dmg" length="3377949" type="application/octet-stream" sparkle:edSignature="Y1mAX7zz9uOgMzZhVMxKUAw+WRb1YsSzFmCFQr3YyEMnHYc/zVMlzvta9O3JxClaupm3UhhsNrdXKcwzrq6DDw=="/>
+        </item>
+    </channel>
+</rss>
